@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A5751">
+    <meta name="description" content="A WEB140 project that compares complementary, analogous, and triadic color harmonies on one webpage.">
+    <title>Color Harmony Lab | Isaiah Evans</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== Header + hero ===== -->
+    <header class="site-header">
+        <div class="container">
+            <span class="eyebrow">WEB140 &middot; Color Theory Project</span>
+            <h1>Color Harmony Lab</h1>
+            <p class="hero-text">
+                One webpage, three ways to color it. This project shows how complementary, analogous,
+                and triadic color harmony each change the mood of the exact same design. Click a
+                palette below and watch every color, swatch, HEX value, and color wheel marker update
+                without refreshing the page.
+            </p>
+
+            <div class="palette-switcher" role="group" aria-label="Choose a color palette">
+                <button type="button" class="palette-btn" data-palette="palette1" aria-pressed="true">
+                    <span class="btn-label">Palette 1</span>
+                    <span class="btn-name">Complementary</span>
+                </button>
+                <button type="button" class="palette-btn" data-palette="palette2" aria-pressed="false">
+                    <span class="btn-label">Palette 2</span>
+                    <span class="btn-name">Analogous</span>
+                </button>
+                <button type="button" class="palette-btn" data-palette="palette3" aria-pressed="false">
+                    <span class="btn-label">Palette 3</span>
+                    <span class="btn-name">Triadic</span>
+                </button>
+            </div>
+            <p class="sr-only" id="status" aria-live="polite"></p>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ===== Live swatches ===== -->
+        <section class="section" id="swatches" aria-labelledby="swatch-title">
+            <div class="container">
+                <h2 id="swatch-title">Current palette: <span data-current-name>Complementary</span></h2>
+                <p class="lead">
+                    These five colors are the design system for the whole page. The HEX codes below
+                    change when you switch palettes.
+                </p>
+
+                <div class="swatch-grid">
+                    <article class="swatch">
+                        <div class="swatch-chip" data-role="primary" role="img" aria-label="Primary color swatch"></div>
+                        <h3>Primary</h3>
+                        <p class="hex" data-hex="primary">#0A5751</p>
+                        <p class="swatch-use">Header, hero, and main headings</p>
+                    </article>
+                    <article class="swatch">
+                        <div class="swatch-chip" data-role="secondary" role="img" aria-label="Secondary color swatch"></div>
+                        <h3>Secondary</h3>
+                        <p class="hex" data-hex="secondary">#2B827B</p>
+                        <p class="swatch-use">Supporting buttons, card edges, sub-headings</p>
+                    </article>
+                    <article class="swatch">
+                        <div class="swatch-chip" data-role="accent" role="img" aria-label="Accent color swatch"></div>
+                        <h3>Accent</h3>
+                        <p class="hex" data-hex="accent">#CE2230</p>
+                        <p class="swatch-use">Call-to-action buttons, highlights, link underlines</p>
+                    </article>
+                    <article class="swatch">
+                        <div class="swatch-chip" data-role="background" role="img" aria-label="Background color swatch"></div>
+                        <h3>Background</h3>
+                        <p class="hex" data-hex="background">#F4FBFA</p>
+                        <p class="swatch-use">Main page background</p>
+                    </article>
+                    <article class="swatch">
+                        <div class="swatch-chip" data-role="text" role="img" aria-label="Text color swatch"></div>
+                        <h3>Text</h3>
+                        <p class="hex" data-hex="text">#0D2120</p>
+                        <p class="swatch-use">Paragraphs and body copy</p>
+                    </article>
+                </div>
+
+                <p class="surface-note">
+                    Supporting color: <strong>surface</strong> <code data-hex="surface">#E3F2F1</code>
+                    is a very light tint of the palette used behind cards and the alternating sections.
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== Color wheel ===== -->
+        <section class="section section-alt" id="wheel-section" aria-labelledby="wheel-title">
+            <div class="container">
+                <h2 id="wheel-title">Where the colors sit on the color wheel</h2>
+                <p class="lead">
+                    The wheel shows the hue of each palette color. The letters mark
+                    <strong>P</strong>rimary, <strong>S</strong>econdary, and <strong>A</strong>ccent, and
+                    the white line connects them so you can see the shape of the harmony: a straight line
+                    for complementary, a short arc for analogous, and a triangle for triadic.
+                </p>
+
+                <div class="wheel-layout">
+                    <figure class="wheel" id="wheel">
+                        <div class="wheel-ring"></div>
+                        <svg id="wheel-svg" viewBox="0 0 200 200" role="img" aria-label="Color wheel showing where the palette colors sit"></svg>
+                        <div class="wheel-center">
+                            <strong id="wheel-harmony">Complementary</strong>
+                            <small id="wheel-rule"></small>
+                        </div>
+                    </figure>
+
+                    <div>
+                        <ul class="hue-list" id="hue-list" aria-label="Hue angle of each palette color"></ul>
+                        <p class="wheel-caption">
+                            Hue is measured in degrees around the wheel: 0&deg; is red, 120&deg; is green,
+                            and 240&deg; is blue.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Color theory basics ===== -->
+        <section class="section" id="basics" aria-labelledby="basics-title">
+            <div class="container">
+                <h2 id="basics-title">Color theory basics</h2>
+                <p class="lead">
+                    The vocabulary behind every choice in this project. The dots in this section are
+                    teaching examples, so they stay the same when the palette changes.
+                </p>
+
+                <div class="concept-grid">
+                    <article class="concept">
+                        <h3>Primary colors</h3>
+                        <p>The starting colors that cannot be made by mixing others. Painters use red, yellow, and blue; screens mix red, green, and blue light.</p>
+                        <div class="dots" aria-hidden="true">
+                            <i style="background:#E02020"></i><i style="background:#F5D000"></i><i style="background:#1F4FE0"></i>
+                        </div>
+                    </article>
+                    <article class="concept">
+                        <h3>Secondary colors</h3>
+                        <p>Made by mixing two primaries: orange (red + yellow), green (yellow + blue), and purple (blue + red).</p>
+                        <div class="dots" aria-hidden="true">
+                            <i style="background:#F28A1A"></i><i style="background:#2FA84F"></i><i style="background:#7A32C8"></i>
+                        </div>
+                    </article>
+                    <article class="concept">
+                        <h3>Tertiary colors</h3>
+                        <p>A primary mixed with the secondary beside it, giving names like red-orange, yellow-green, and blue-violet.</p>
+                        <div class="dots" aria-hidden="true">
+                            <i style="background:#EE5A1C"></i><i style="background:#A6CC2A"></i><i style="background:#3F7FD6"></i><i style="background:#B43AA8"></i>
+                        </div>
+                    </article>
+                    <article class="concept">
+                        <h3>Warm colors</h3>
+                        <p>Reds, oranges, and yellows. They feel energetic and close, and they draw the eye first.</p>
+                        <div class="dots" aria-hidden="true">
+                            <i style="background:#D62828"></i><i style="background:#F77F00"></i><i style="background:#FCBF49"></i>
+                        </div>
+                    </article>
+                    <article class="concept">
+                        <h3>Cool colors</h3>
+                        <p>Blues, greens, and violets. They feel calm and spacious, and they tend to sit back on the page.</p>
+                        <div class="dots" aria-hidden="true">
+                            <i style="background:#2A9D8F"></i><i style="background:#2F6FDE"></i><i style="background:#6A4FC8"></i>
+                        </div>
+                    </article>
+                    <article class="concept">
+                        <h3>Hue</h3>
+                        <p>The pure color family, such as red or blue, and its position around the wheel in degrees.</p>
+                        <div class="ramp ramp-hue" aria-hidden="true"></div>
+                    </article>
+                    <article class="concept">
+                        <h3>Saturation</h3>
+                        <p>How intense a color is. Low saturation looks gray and muted; high saturation looks vivid.</p>
+                        <div class="ramp ramp-sat" aria-hidden="true"></div>
+                    </article>
+                    <article class="concept">
+                        <h3>Brightness / value</h3>
+                        <p>How light or dark a color is. Value differences are what make text readable on a background.</p>
+                        <div class="ramp ramp-val" aria-hidden="true"></div>
+                    </article>
+                    <article class="concept">
+                        <h3>Color wheel</h3>
+                        <p>Hues arranged in a circle so their relationships are easy to see. Harmonies are patterns drawn on it, like the shapes in the wheel section above.</p>
+                        <div class="dots" aria-hidden="true">
+                            <i style="background:conic-gradient(#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)"></i>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Color analysis + documentation ===== -->
+        <section class="section section-alt" id="analysis" aria-labelledby="analysis-title">
+            <div class="container">
+                <h2 id="analysis-title">Color analysis</h2>
+                <p class="lead">
+                    Each palette is built from a base hue and a harmony rule. The tables list the
+                    HEX codes and hue angles used in <code>style.css</code> and <code>script.js</code>, so
+                    the documentation and the live page always agree. The card for the palette you are
+                    viewing is outlined.
+                </p>
+
+                <div class="analysis-grid">
+
+                    <!-- Palette 1 -->
+                    <article class="analysis-card" data-palette="palette1">
+                        <span class="now-showing">Now showing</span>
+                        <h3>Palette 1: Complementary &mdash; Teal &amp; Coral Red</h3>
+
+                        <h4>Harmony</h4>
+                        <p>
+                            <strong>Complementary.</strong> The accent sits exactly opposite the primary on the
+                            wheel (175&deg; and 355&deg;, a 180&deg; gap). The secondary is a lighter shade of the
+                            primary hue, so only the accent uses the opposite color.
+                        </p>
+
+                        <div class="table-wrap">
+                            <table class="color-table">
+                                <thead>
+                                    <tr><th scope="col">Role</th><th scope="col">Color</th><th scope="col">HEX</th><th scope="col">Hue</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><th scope="row">Primary</th><td><span class="chip" style="background:#0A5751"></span></td><td>#0A5751</td><td>175&deg; (deep teal)</td></tr>
+                                    <tr><th scope="row">Secondary</th><td><span class="chip" style="background:#2B827B"></span></td><td>#2B827B</td><td>175&deg; (sea teal)</td></tr>
+                                    <tr><th scope="row">Accent</th><td><span class="chip" style="background:#CE2230"></span></td><td>#CE2230</td><td>355&deg; (signal red)</td></tr>
+                                    <tr><th scope="row">Background</th><td><span class="chip" style="background:#F4FBFA"></span></td><td>#F4FBFA</td><td>teal-tinted white</td></tr>
+                                    <tr><th scope="row">Text</th><td><span class="chip" style="background:#0D2120"></span></td><td>#0D2120</td><td>teal-tinted black</td></tr>
+                                    <tr><th scope="row">Surface</th><td><span class="chip" style="background:#E3F2F1"></span></td><td>#E3F2F1</td><td>light teal tint</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>Why I selected these colors</h4>
+                        <p>
+                            A deep teal makes a steady, trustworthy base, and red is the one color that
+                            cuts through it. Because the two are opposites, the red accent looks brighter
+                            next to teal than it would on its own. I kept the accent small so the contrast
+                            feels like a spark instead of a fight, and I tinted the background and text
+                            toward teal so the neutrals belong to the palette.
+                        </p>
+
+                        <h4>Mood</h4>
+                        <p>Energetic but professional. Confident, modern, and clear about what to click.</p>
+
+                        <h4>Website usage</h4>
+                        <p>
+                            I would use the primary teal for the header, hero, and main headings, the
+                            secondary teal for navigation and supporting buttons, and the red accent only
+                            for the most important call-to-action button and small highlights. The near-white
+                            background holds the main content, with the near-black teal text on top for
+                            easy reading.
+                        </p>
+                    </article>
+
+                    <!-- Palette 2 -->
+                    <article class="analysis-card" data-palette="palette2">
+                        <span class="now-showing">Now showing</span>
+                        <h3>Palette 2: Analogous &mdash; Blue, Indigo &amp; Violet</h3>
+
+                        <h4>Harmony</h4>
+                        <p>
+                            <strong>Analogous.</strong> Three neighboring hues, each 30&deg; from the next:
+                            blue (210&deg;), indigo (240&deg;), and violet (270&deg;). Because they sit side by
+                            side, they blend into one smooth family.
+                        </p>
+
+                        <div class="table-wrap">
+                            <table class="color-table">
+                                <thead>
+                                    <tr><th scope="col">Role</th><th scope="col">Color</th><th scope="col">HEX</th><th scope="col">Hue</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><th scope="row">Primary</th><td><span class="chip" style="background:#0F4C8A"></span></td><td>#0F4C8A</td><td>210&deg; (ocean blue)</td></tr>
+                                    <tr><th scope="row">Secondary</th><td><span class="chip" style="background:#3030A6"></span></td><td>#3030A6</td><td>240&deg; (indigo)</td></tr>
+                                    <tr><th scope="row">Accent</th><td><span class="chip" style="background:#7F26D9"></span></td><td>#7F26D9</td><td>270&deg; (vivid violet)</td></tr>
+                                    <tr><th scope="row">Background</th><td><span class="chip" style="background:#F7F8FD"></span></td><td>#F7F8FD</td><td>blue-tinted white</td></tr>
+                                    <tr><th scope="row">Text</th><td><span class="chip" style="background:#0E152A"></span></td><td>#0E152A</td><td>midnight navy</td></tr>
+                                    <tr><th scope="row">Surface</th><td><span class="chip" style="background:#E8ECF7"></span></td><td>#E8ECF7</td><td>light blue tint</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>Why I selected these colors</h4>
+                        <p>
+                            I wanted to see how far one design could go with almost no color conflict. Moving
+                            from blue to violet keeps every color related, so nothing clashes. Since neighbors
+                            have less hue contrast, I used bigger jumps in brightness and saturation to keep
+                            the parts distinct: the accent is the brightest, most saturated of the three.
+                        </p>
+
+                        <h4>Mood</h4>
+                        <p>Calm, focused, and cohesive, with a creative, slightly dreamy feel from the violet end.</p>
+
+                        <h4>Website usage</h4>
+                        <p>
+                            I would use the ocean blue for the header and main headings, the indigo for
+                            navigation and secondary elements, and the violet accent for buttons and
+                            links. This suits a tech, education, or wellness site where a smooth, quiet look
+                            matters more than strong contrast.
+                        </p>
+                    </article>
+
+                    <!-- Palette 3 -->
+                    <article class="analysis-card" data-palette="palette3">
+                        <span class="now-showing">Now showing</span>
+                        <h3>Palette 3: Triadic &mdash; Berry Rose, Azure &amp; Lime</h3>
+
+                        <h4>Harmony</h4>
+                        <p>
+                            <strong>Triadic.</strong> Three hues evenly spaced 120&deg; apart:
+                            rose (330&deg;), azure blue (210&deg;), and lime green (90&deg;). Together they form
+                            a triangle on the wheel, so the palette is colorful but balanced.
+                        </p>
+
+                        <div class="table-wrap">
+                            <table class="color-table">
+                                <thead>
+                                    <tr><th scope="col">Role</th><th scope="col">Color</th><th scope="col">HEX</th><th scope="col">Hue</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><th scope="row">Primary</th><td><span class="chip" style="background:#9E1A5C"></span></td><td>#9E1A5C</td><td>330&deg; (berry rose)</td></tr>
+                                    <tr><th scope="row">Secondary</th><td><span class="chip" style="background:#125CA5"></span></td><td>#125CA5</td><td>210&deg; (azure)</td></tr>
+                                    <tr><th scope="row">Accent</th><td><span class="chip" style="background:#80C936"></span></td><td>#80C936</td><td>90&deg; (lime)</td></tr>
+                                    <tr><th scope="row">Background</th><td><span class="chip" style="background:#FAF5F7"></span></td><td>#FAF5F7</td><td>blush-tinted white</td></tr>
+                                    <tr><th scope="row">Text</th><td><span class="chip" style="background:#250E1A"></span></td><td>#250E1A</td><td>deep plum</td></tr>
+                                    <tr><th scope="row">Surface</th><td><span class="chip" style="background:#F3E8ED"></span></td><td>#F3E8ED</td><td>light rose tint</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>Why I selected these colors</h4>
+                        <p>
+                            With a triad, one color should lead and the other two support it, or the page
+                            turns chaotic. Berry rose leads, azure supports it, and lime is used in small
+                            doses. Lime is a very light color, so I only use it as a fill with dark text on
+                            top (it is too pale to read as text on the light background). The tinted
+                            neutrals keep the bold hues from feeling harsh.
+                        </p>
+
+                        <h4>Mood</h4>
+                        <p>Playful, bold, and creative. It feels youthful and full of variety.</p>
+
+                        <h4>Website usage</h4>
+                        <p>
+                            I would use the berry rose for the header and hero, azure for navigation and
+                            secondary buttons, and the lime accent for call-to-action buttons and badges.
+                            This would fit a creative portfolio, an event page, or a brand that wants to
+                            stand out.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Real website usage demo ===== -->
+        <section class="section" id="demo" aria-labelledby="demo-title">
+            <div class="container">
+                <h2 id="demo-title">The palette on a real website</h2>
+                <p class="lead">
+                    A small mock-up using the same roles I describe above: primary for the header, secondary
+                    for supporting elements, accent for the main button, surface for cards, and background
+                    plus text for the content.
+                </p>
+
+                <div class="mock" aria-label="Example website using the current palette">
+                    <div class="mock-nav">
+                        <strong>Sample Studio</strong>
+                        <span>Work</span><span>About</span><span>Contact</span>
+                        <span class="btn btn-accent" aria-hidden="true">Book now</span>
+                    </div>
+                    <div class="mock-hero">
+                        <h3>Color choices shape how a page feels</h3>
+                        <p>
+                            The heading uses the primary color, the paragraph uses the text color, and the
+                            <a href="#demo">link</a> underline uses the accent.
+                        </p>
+                        <span class="btn btn-accent" aria-hidden="true">Primary action</span>
+                        <span class="btn btn-secondary" aria-hidden="true">Secondary action</span>
+                    </div>
+                    <div class="mock-cards">
+                        <div class="mock-card"><h4>Card one</h4><p>Surface color with a secondary edge.</p></div>
+                        <div class="mock-card"><h4>Card two</h4><p>Cards keep content grouped and readable.</p></div>
+                        <div class="mock-card"><h4>Card three</h4><p>Everything here recolors from the palette.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== What I learned ===== -->
+        <section class="section section-alt" id="learned" aria-labelledby="learned-title">
+            <div class="container">
+                <h2 id="learned-title">What I learned</h2>
+                <div class="takeaways">
+                    <article class="takeaway">
+                        <h3>What makes two colors work together?</h3>
+                        <p>A clear relationship on the wheel, plus enough difference in brightness that each color can be seen.</p>
+                    </article>
+                    <article class="takeaway">
+                        <h3>What happens with opposite colors?</h3>
+                        <p>Strong contrast and energy. They make each other look brighter, so they work best when one is used sparingly.</p>
+                    </article>
+                    <article class="takeaway">
+                        <h3>What happens with neighboring colors?</h3>
+                        <p>A smooth, cohesive look. It is calm and safe, but needs value differences to keep parts distinct.</p>
+                    </article>
+                    <article class="takeaway">
+                        <h3>How does color change a site's mood?</h3>
+                        <p>The layout never changed between palettes, yet the feel went from professional to calm to playful using color alone.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p><strong>Color Harmony Lab</strong> &middot; WEB140 Color Theory Project &middot; Isaiah Evans</p>
+            <p><a href="../index.html">&larr; Back to the WEB140 home page</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
